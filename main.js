@@ -27,6 +27,79 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 
 
+function validateCred(arr) {
+  //return true when an array contains digits of a valid credit card number
+  //return false when credit card number is invalid
+  let digitCheck = 0;
+  let oddSum = 0;
+  let evenSum = 0;
+
+  for (let i = arr.length - 1; i >= 0; i--) {
+  digitCheck++;
+  //sum of odd numbers
+   if(digitCheck % 2 != 0) {
+     oddSum += arr[i]
+   } else if(digitCheck % 2 == 0) {
+     if( (arr[i] * 2) > 9 ) {
+       evenSum += (arr[i] * 2) - 9
+     } else {
+       evenSum += (arr[i] * 2)
+     }
+   }
+
+  }
+  let total = evenSum + oddSum;
+  
+  if (total % 10 === 0) {
+    return true
+  } else {
+    return false
+  }
+
+  
+}
+
+function findInvalidCards(arr) {
+  let invalidBatch = []
+  for (let i = 0; i < arr.length; i++) {
+    //console.log(arr[i]);
+    if( validateCred(arr[i]) === false) {
+      invalidBatch.push(arr[i])
+    } 
+  }
+  return invalidBatch
+}
+
+function idInvalidCardCompanies(arr) {
+  //returns an array of companies
+  let compArr = [];
+  let newArr = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    compArr.push(arr[i][0])
+  }
+  
+    if(compArr.indexOf(3) != -1) {
+      newArr.push('Amex');
+    } 
+    if(compArr.indexOf(4) != -1) {
+      newArr.push('Visa');
+    }
+    if (compArr.indexOf(5) != -1) {
+      newArr.push('Mastercard')
+    } 
+    if (compArr.indexOf(6) != -1) {
+      newArr.push('Discover')
+    }
+  
+   return newArr;
+};
+
+console.log(idInvalidCardCompanies(findInvalidCards(batch)));
+
+
+
+
 
 
 
